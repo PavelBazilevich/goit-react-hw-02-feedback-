@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import css from 'components/FeedbackOptions/FeedbackOptions.module.css';
 
 class FeedbackOptions extends Component {
+  static propTypes = {
+    hendleChange: PropTypes.func.isRequired,
+  };
   render() {
     return (
       <div className={css.button_box}>

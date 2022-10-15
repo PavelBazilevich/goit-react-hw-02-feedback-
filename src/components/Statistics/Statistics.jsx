@@ -1,6 +1,12 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 class Statistics extends Component {
+  static propTypes = {
+    state: PropTypes.object.isRequired,
+    countTotalFeedback: PropTypes.func.isRequired,
+    percentage: PropTypes.func.isRequired,
+  };
   render() {
     return (
       <div>
