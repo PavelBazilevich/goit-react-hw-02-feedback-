@@ -4,18 +4,24 @@ import React, { Component } from 'react';
 class Statistics extends Component {
   static propTypes = {
     state: PropTypes.object.isRequired,
-    countTotalFeedback: PropTypes.func.isRequired,
-    percentage: PropTypes.func.isRequired,
+    total: PropTypes.number.isRequired,
+    percentage: PropTypes.number.isRequired,
   };
   render() {
+    const { state } = this.props;
+
     return (
       <div>
         <h2>Statistics</h2>
         <ul>
-          <li>Good: {this.props.state.good}</li>
-          <li>Neutral: {this.props.state.neutral}</li>
-          <li>Bad: {this.props.state.bad}</li>
-          <li>Total: {this.props.countTotalFeedback}</li>
+          {Object.entries(state).map(([key, value]) => {
+            return (
+              <li key={key}>
+                {key.charAt(0).toUpperCase() + key.slice(1)}: {value}
+              </li>
+            );
+          })}
+          <li>Total: {this.props.total}</li>
           <li>Positive feetback: {this.props.percentage}%</li>
         </ul>
       </div>

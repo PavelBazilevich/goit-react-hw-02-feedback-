@@ -5,31 +5,22 @@ import css from 'components/FeedbackOptions/FeedbackOptions.module.css';
 class FeedbackOptions extends Component {
   static propTypes = {
     hendleChange: PropTypes.func.isRequired,
+    options: PropTypes.arrayOf(PropTypes.string).isRequired,
   };
   render() {
+    const { options } = this.props;
     return (
       <div className={css.button_box}>
-        <button
-          type="button"
-          name="good"
-          onClick={e => this.props.hendleChange(e)}
-        >
-          Good
-        </button>
-        <button
-          type="button"
-          name="neutral"
-          onClick={e => this.props.hendleChange(e)}
-        >
-          Neutral
-        </button>
-        <button
-          type="button"
-          name="bad"
-          onClick={e => this.props.hendleChange(e)}
-        >
-          Bad
-        </button>
+        {options.map(option => (
+          <button
+            key={option}
+            type="button"
+            name={option}
+            onClick={() => this.props.hendleChange(option)}
+          >
+            {option.charAt(0).toUpperCase() + option.slice(1)}
+          </button>
+        ))}
       </div>
     );
   }

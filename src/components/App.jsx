@@ -12,19 +12,13 @@ class App extends Component {
     bad: 0,
   };
 
-  hendleChange = event => {
-    this.setState(prevState => {
-      if (event.target.name === 'good') {
-        return { good: prevState.good + 1 };
-      } else if (event.target.name === 'neutral') {
-        return { neutral: prevState.neutral + 1 };
-      } else if (event.target.name === 'bad') {
-        return { bad: prevState.bad + 1 };
-      }
-    });
+  hendleChange = option => {
+    this.setState(prevState => ({
+      [option]: prevState[option] + 1,
+    }));
   };
 
-  countTotalFeedback = () => {
+  total = () => {
     const valuesArr = Object.values(this.state);
     return valuesArr.reduce((acc, val) => {
       acc += val;
@@ -33,31 +27,23 @@ class App extends Component {
   };
 
   countPositiveFeedbackPercentage = () => {
-    return Math.trunc((this.state.good / this.countTotalFeedback()) * 100);
-  };
-
-  availabilityOfStatistics = () => {
-    if (
-      this.state.good === 0 &&
-      this.state.neutral === 0 &&
-      this.state.bad === 0
-    ) {
-      return true;
-    } else {
-      return false;
-    }
+    return Math.trunc((this.state.good / this.total()) * 100);
   };
 
   render() {
+    const total = this.total();
     return (
       <div className={css.section}>
         <Section />
-        <FeedbackOptions hendleChange={this.hendleChange} />
+        <FeedbackOptions
+          hendleChange={this.hendleChange}
+          options={Object.keys(this.state)}
+        />
 
-        {!this.availabilityOfStatistics() ? (
+        {total ? (
           <Statistics
             state={this.state}
-            countTotalFeedback={this.countTotalFeedback()}
+            total={total}
             percentage={this.countPositiveFeedbackPercentage()}
           />
         ) : (
